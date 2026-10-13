@@ -1,0 +1,56 @@
+# Complaint Escalation Policy
+
+## Escalation Triggers
+1. SLA deadline exceeded without status update
+2. Emergency complaints (urgency score = 10)
+3. Root cause complaints (3+ recurring incidents) 
+4. Suspected fraud cases
+5. Low AI confidence requiring human review
+
+## Escalation Levels
+
+### Level 1: Department Supervisor
+- Triggered when: SLA breach detected
+- Notification method: Email + WhatsApp to supervisor
+- Response required: Within 2 hours
+- Action: Assign officer, provide status update
+
+### Level 2: Municipal Manager  
+- Triggered when: No response to Level 1 within 4 hours
+- Notification method: Email + SMS to manager
+- Response required: Within 1 hour
+- Action: Direct intervention, resource reallocation
+
+### Level 3: City Administrator
+- Triggered when: Critical complaints unresolved after 24 hours
+- Notification method: Formal report + direct call
+- Response required: Immediate
+- Action: Emergency protocols, media management
+
+## Escalation Matrix by Urgency Score
+
+### Score 8-10 (Critical)
+- Level 1: Immediate notification
+- Level 2: 2 hours if unresolved  
+- Level 3: 4 hours if unresolved
+
+### Score 6-7 (High)
+- Level 1: SLA breach + 1 hour
+- Level 2: SLA breach + 6 hours
+- Level 3: SLA breach + 24 hours
+
+### Score 4-5 (Medium)  
+- Level 1: SLA breach + 2 hours
+- Level 2: SLA breach + 12 hours
+- Level 3: Not applicable
+
+### Score 1-3 (Low)
+- Level 1: SLA breach + 4 hours  
+- Level 2: SLA breach + 24 hours
+- Level 3: Not applicable
+
+## Special Cases
+- Anonymous complaints: Skip citizen notification, continue internal escalation
+- Vulnerable group complaints: Accelerated escalation timeline
+- Media attention cases: Direct escalation to Level 3
+- Legal implications: Immediate legal department notification

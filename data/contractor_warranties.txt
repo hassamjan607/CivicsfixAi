@@ -1,0 +1,36 @@
+# Contractor Warranty Information
+
+## ABC Road Construction
+- Contract Period: 2023-2026
+- Warranty Coverage: 2 years for road surfaces
+- Areas: Sectors 1-5, Main Boulevard
+- Contact: abc.roads@contractor.com
+- Emergency: +92-300-1111111
+
+## XYZ Plumbing Services  
+- Contract Period: 2023-2025
+- Warranty Coverage: 1 year for pipe installations
+- Areas: Water supply lines, Sectors 6-10
+- Contact: xyz.plumbing@contractor.com
+- Emergency: +92-300-2222222
+
+## City Electrical Works
+- Contract Period: 2024-2027
+- Warranty Coverage: 3 years for streetlight installations
+- Areas: All major roads and parks
+- Contact: city.electrical@contractor.com  
+- Emergency: +92-300-3333333
+
+## Green Waste Solutions
+- Contract Period: 2023-2024  
+- Warranty Coverage: 6 months for waste collection equipment
+- Areas: Residential sectors, commercial zones
+- Contact: green.waste@contractor.com
+- Emergency: +92-300-4444444
+
+## Municipal Asset Warranty Policy
+- All contractors must provide warranty for installed assets
+- Warranty period varies by asset type and contractor agreement
+- Emergency response required within 4 hours for critical infrastructure
+- Regular maintenance included in warranty coverage
+- Asset replacement covered if failure occurs within warranty period

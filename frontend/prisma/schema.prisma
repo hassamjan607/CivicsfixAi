@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  phone        String?   @unique
+  passwordHash String
+  role         String    // citizen | officer | worker | admin
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  officerId    String?   // worker's supervising officer
+  language     String    @default("en")
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  complaints         Complaint[]        @relation("CitizenComplaints")
+  assignedComplaints Complaint[]        @relation("WorkerComplaints")
+  managedComplaints  Complaint[]        @relation("OfficerComplaints")
+  complaintEvents    ComplaintEvent[]
+  proofs             Proof[]
+  feedbacks          Feedback[]
+  notifications      Notification[]
+}
+
+model Department {
+  id           String      @id @default(cuid())
+  name         String
+  code         String      @unique // WASA | TEPA | LWMC | LESCO
+  categories   String      // JSON array of handled categories
+  contactEmail String
+  slaSettings  String      // JSON: { emergencyHours: 2, highHours: 24, normalHours: 72 }
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  users        User[]
+  complaints   Complaint[]
+}
+
+model Complaint {
+  id                String           @id @default(cuid())
+  trackingId        String           @unique
+  citizenId         String?
+  citizen           User?            @relation("CitizenComplaints", fields: [citizenId], references: [id])
+  guestContact      String?          // phone or email for guest reports
+  category          String
+  summary           String
+  description       String
+  language          String           @default("en")
+  inputMode         String           @default("voice") // voice | text | form
+  lat               Float?
+  lng               Float?
+  address           String?
+  beforePhotoUrls   String           @default("[]") // JSON array
+  urgency           Int              @default(5) // 1 to 10
+  reasons           String           @default("[]") // JSON array of points/reasons
+  flags             String           @default("[]") // JSON array of special tags
+  confidence        Float            @default(1.0)
+  departmentId      String?
+  department        Department?      @relation(fields: [departmentId], references: [id])
+  status            String           @default("SUBMITTED") // SUBMITTED | ASSIGNED | IN_PROGRESS | RESOLVED | CONFIRMED | REOPENED
+  assignedOfficerId String?
+  assignedOfficer   User?            @relation("OfficerComplaints", fields: [assignedOfficerId], references: [id])
+  assignedWorkerId  String?
+  assignedWorker    User?            @relation("WorkerComplaints", fields: [assignedWorkerId], references: [id])
+  slaDueAt          DateTime?
+  reopenCount       Int              @default(0)
+  escalated         Boolean          @default(false)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  events            ComplaintEvent[]
+  proofs            Proof[]
+  feedbacks         Feedback[]
+}
+
+model ComplaintEvent {
+  id          String    @id @default(cuid())
+  complaintId String
+  complaint   Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  actorId     String?
+  actor       User?     @relation(fields: [actorId], references: [id])
+  actorRole   String
+  type        String    // CREATED | ASSIGNED | STARTED | RESOLVED | CONFIRMED | REOPENED | ESCALATED | CATEGORY_CHANGED | NOTE_ADDED
+  fromStatus  String?
+  toStatus    String?
+  note        String?
+  createdAt   DateTime  @default(now())
+}
+
+model Proof {
+  id            String    @id @default(cuid())
+  complaintId   String
+  complaint     Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  workerId      String
+  worker        User      @relation(fields: [workerId], references: [id])
+  afterPhotoUrl String
+  note          String?
+  materials     String?
+  lat           Float?
+  lng           Float?
+  createdAt     DateTime  @default(now())
+}
+
+model Feedback {
+  id          String    @id @default(cuid())
+  complaintId String
+  complaint   Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  citizenId   String?
+  citizen     User?     @relation(fields: [citizenId], references: [id])
+  satisfied   Boolean
+  rating      Int?      // 1 to 5
+  reason      String?
+  photoUrl    String?
+  createdAt   DateTime  @default(now())
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  body      String
+  link      String?
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+}
+
+model EmailLog {
+  id          String    @id @default(cuid())
+  to          String
+  subject     String
+  template    String
+  complaintId String?
+  status      String    @default("sent") // sent | failed | logged
+  error       String?
+  attempts    Int       @default(1)
+  sentAt      DateTime  @default(now())
+}

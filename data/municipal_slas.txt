@@ -1,0 +1,31 @@
+# Municipal Service Level Agreements
+
+## Roads Department SLA
+- Pothole repairs: 72 hours from complaint registration
+- Road damage assessment: 24 hours
+- Major road reconstruction: 30 days planning period
+- Emergency road hazards: 2 hours response time
+
+## Water & Sanitation SLA  
+- Water leak repairs: 24 hours
+- Sewage blockage clearing: 12 hours
+- Water quality complaints: 48 hours investigation
+- Emergency water supply disruption: 4 hours restoration
+
+## Solid Waste Management SLA
+- Garbage collection complaints: 48 hours resolution
+- Illegal dumping cleanup: 24 hours
+- Recycling program queries: 7 days response
+- Bulk waste removal: 5 business days
+
+## Electrical Department SLA
+- Streetlight repairs: 12 hours 
+- Power line hazards: 2 hours emergency response
+- New connection requests: 15 business days
+- Electrical safety inspections: 7 days
+
+## General Administration SLA
+- General complaints: 7 days (168 hours)
+- Document requests: 3 business days
+- Policy clarifications: 5 business days
+- Inter-department coordination: 48 hours

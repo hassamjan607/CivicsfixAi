@@ -1,0 +1,17 @@
+{
+  "name": "CivicFix AI - Municipal Grievance Redressal",
+  "short_name": "CivicFix",
+  "description": "AI-powered municipal complaint triage platform with Urdu/English voice intake and verified photographic proof.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B1E36",
+  "theme_color": "#0D7377",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

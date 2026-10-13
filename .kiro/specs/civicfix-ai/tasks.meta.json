@@ -1,0 +1,699 @@
+{
+  "pbtResults": {
+    "3.3 Write property test for emergency override": {
+      "status": "passed",
+      "lastRunTimestamp": 1791621017899
+    },
+    "3.2 Write property test for urgency score bounds": {
+      "status": "passed",
+      "lastRunTimestamp": 1791621052821
+    },
+    "2.2 Write property test for tracking ID generation": {
+      "status": "passed",
+      "lastRunTimestamp": 1791621268945
+    },
+    "3.4 Write property test for recurrence bonus tiers": {
+      "status": "passed",
+      "lastRunTimestamp": 1791621613385
+    },
+    "5.2 Write property test for weather bonus tiers": {
+      "status": "passed",
+      "lastRunTimestamp": 1791622559812
+    },
+    "4.2 Write property test for agent schema compliance": {
+      "status": "passed",
+      "lastRunTimestamp": 1791622752356
+    },
+    "6.3 Write property test for duplicate count monotonicity": {
+      "status": "passed",
+      "lastRunTimestamp": 1791622855069
+    },
+    "4.3 Write property test for single missing field follow-up": {
+      "status": "passed",
+      "lastRunTimestamp": 1791622995325
+    },
+    "6.2 Write property test for deduplication radius": {
+      "status": "passed",
+      "lastRunTimestamp": 1791623004515
+    },
+    "7.2 Write property test for severity label mapping": {
+      "status": "passed",
+      "lastRunTimestamp": 1791623942269
+    },
+    "7.3 Write property test for fraud detection": {
+      "status": "passed",
+      "lastRunTimestamp": 1791624150384
+    }
+  },
+  "executionHistory": {
+    "1. Setup project structure and core dependencies": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617821309
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617844334
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791620034660
+      }
+    ],
+    "2.1 Create SQLModel table definitions in models.py": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617821633
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791620042175
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791620776832
+      }
+    ],
+    "2.2 Write property test for tracking ID generation": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617821935
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791620787469
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621493428
+      }
+    ],
+    "2.3 Implement database initialization and seeding": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617822178
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791620788899
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621491781
+      }
+    ],
+    "2.4 Write unit tests for model validation": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617822310
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791620789025
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621491186
+      }
+    ],
+    "3.1 Implement pure Python rules engine in rules.py": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617822472
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791620042903
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791620777192
+      }
+    ],
+    "3.2 Write property test for urgency score bounds": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617822594
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791620789287
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621492721
+      }
+    ],
+    "3.3 Write property test for emergency override": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617822783
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791620789909
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621490582
+      }
+    ],
+    "3.4 Write property test for recurrence bonus tiers": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617822930
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621503340
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621635826
+      }
+    ],
+    "4.1 Create agent.py with Groq Llama integration": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617823067
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621651465
+      }
+    ],
+    "4.2 Write property test for agent schema compliance": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617823188
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791622362786
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623041734
+      }
+    ],
+    "4.3 Write property test for single missing field follow-up": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617823283
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791622369979
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623042418
+      }
+    ],
+    "5.1 Implement context.py with async weather and places fetchers": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617823371
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621652136
+      }
+    ],
+    "5.2 Write property test for weather bonus tiers": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617823474
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791622373970
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623043083
+      }
+    ],
+    "6.1 Create dedup.py with image and location-based deduplication": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617823584
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621653030
+      }
+    ],
+    "6.2 Write property test for deduplication radius": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617823680
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791622378101
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623043797
+      }
+    ],
+    "6.3 Write property test for duplicate count monotonicity": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617823759
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791622382100
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623044521
+      }
+    ],
+    "6.4 Write property test for duplicate image detection": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617823942
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623049439
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623631944
+      }
+    ],
+    "7.1 Implement vision.py with Gemini Flash integration": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824026
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623049879
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623632635
+      }
+    ],
+    "7.2 Write property test for severity label mapping": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824108
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623646332
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791624536275
+      }
+    ],
+    "7.3 Write property test for fraud detection": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824193
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623646907
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791624536750
+      }
+    ],
+    "8.1 Implement notify.py with email and WhatsApp integration": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824278
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791623647633
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791624537446
+      }
+    ],
+    "8.2 Write unit tests for notification retry logic": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824359
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791624551522
+      }
+    ],
+    "9.1 Create main.py with core API endpoints": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824453
+      },
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791624552059
+      }
+    ],
+    "9.2 Implement complaint management endpoints": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824540
+      }
+    ],
+    "9.3 Write property test for file size rejection": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824642
+      }
+    ],
+    "9.4 Write property test for graceful degradation": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824725
+      }
+    ],
+    "10.1 Implement officer queue endpoints": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824812
+      }
+    ],
+    "10.2 Write property test for officer queue sort order": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824901
+      }
+    ],
+    "10.3 Implement admin dashboard endpoints": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617824990
+      }
+    ],
+    "10.4 Write property test for heatmap weight correctness": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617825067
+      }
+    ],
+    "10.5 Write property test for admin filter soundness": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617825152
+      }
+    ],
+    "11.1 Create review queue endpoints": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617825248
+      }
+    ],
+    "11.2 Write unit tests for review queue workflow": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617825325
+      }
+    ],
+    "12.1 Implement rag.py with LlamaIndex and sqlite-vec": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617825410
+      }
+    ],
+    "12.2 Create POST /ask-regulations endpoint": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617825503
+      }
+    ],
+    "12.3 Write property test for RAG source attribution": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617825675
+      }
+    ],
+    "13.1 Setup APScheduler for SLA monitoring": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617825762
+      }
+    ],
+    "13.2 Write property test for SLA deadline arithmetic": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617825853
+      }
+    ],
+    "13.3 Write property test for SLA escalation trigger": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617825962
+      }
+    ],
+    "14.1 Implement POST /simulate endpoint": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617826066
+      }
+    ],
+    "14.2 Write property test for simulator isolation": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617826172
+      }
+    ],
+    "15.1 Create citizen chat interface": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617826307
+      }
+    ],
+    "15.2 Build officer queue interface": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617826403
+      }
+    ],
+    "15.3 Implement admin dashboard": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617826494
+      }
+    ],
+    "16. Checkpoint - Core system functional testing": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617826570
+      }
+    ],
+    "17.1 Add anonymous mode functionality": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617826656
+      }
+    ],
+    "17.2 Write property test for anonymous mode PII exclusion": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617826770
+      }
+    ],
+    "17.3 Implement warranty and asset lookup": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617826905
+      }
+    ],
+    "17.4 Write property test for nearby assets radius": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617827012
+      }
+    ],
+    "18.1 Implement category-to-department routing": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617827153
+      }
+    ],
+    "18.2 Write property test for category routing completeness": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617827302
+      }
+    ],
+    "18.3 Add root cause flag detection": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617827415
+      }
+    ],
+    "18.4 Write property test for root cause flag threshold": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617827507
+      }
+    ],
+    "19.1 Create status event logging system": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617827599
+      }
+    ],
+    "19.2 Write property test for status event audit trail": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617827698
+      }
+    ],
+    "20.1 Setup comprehensive integration tests": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617827790
+      }
+    ],
+    "20.2 Write end-to-end property tests": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617827887
+      }
+    ],
+    "21. Final checkpoint - Complete system validation": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791617827999
+      }
+    ],
+    "2. Implement core data models and database layer": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621493541
+      }
+    ],
+    "3. Build urgency scoring rules engine": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791621635952
+      }
+    ],
+    "7. Build vision service for photo analysis": [
+      {
+        "executionId": "65a928a8-2d64-4f58-b332-f4b02279e99b",
+        "chatSessionId": "sess_5e8a4cf7-23c7-44c4-bd6c-65a8f2a38862",
+        "timestamp": 1791624536889
+      }
+    ]
+  }
+}

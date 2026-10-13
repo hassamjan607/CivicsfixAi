@@ -1,0 +1,290 @@
+"""
+CivicFix AI - FastAPI Main Application
+
+Core API endpoints for the CivicFix AI complaint management system.
+Integrates all services: agent, vision, rules, context, deduplication, notification.
+"""
+
+from contextlib import asynccontextmanager
+from datetime import datetime, timedelta
+from typing import List, Optional, Dict, Any
+import base64
+import logging
+import os
+import json
+
+import uvicorn
+from fastapi import FastAPI, HTTPException, Request, UploadFile, File, Form, BackgroundTasks, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from sqlmodel import Session, SQLModel, create_engine, select
+from pydantic import BaseModel, Field
+
+# Import our modules
+from .models import *
+from .config import *
+from .database import run_database_initialization, is_database_initialized, get_database_stats
+from .agent import process_chat_message, get_agent_client, should_trigger_human_review
+from .rules import compute_urgency
+from .context import get_context_data
+from .vision import analyze_photo, validate_image, blur_privacy_info, get_base_severity_score
+from .notify import send_complaint_notification, send_status_update_notification, send_escalation_notification
+from .dedup import find_duplicate_complaint, check_duplicate_image_across_complaints, create_image_hash
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Database setup
+DATABASE_URL = "sqlite:///civicfix.db"
+engine = create_engine(DATABASE_URL, echo=False)
+
+# Request/Response models
+class ChatRequest(BaseModel):
+    message: str = Field(..., min_length=1, max_length=1000)
+    session_id: Optional[str] = None
+    latitude: Optional[float] = Field(None, ge=-90, le=90)
+    longitude: Optional[float] = Field(None, ge=-180, le=180)
+    anonymous: bool = False
+
+class ChatResponse(BaseModel):
+    response: str
+    tracking_id: Optional[str] = None
+    status: str
+    needs_clarification: bool = False
+    error: Optional[str] = None
+
+class ComplaintSubmitRequest(BaseModel):
+    category: Optional[str] = None
+    description: str = Field(..., min_length=1, max_length=2000)
+    latitude: Optional[float] = Field(None, ge=-90, le=90)
+    longitude: Optional[float] = Field(None, ge=-180, le=180)
+    citizen_name: Optional[str] = Field(None, max_length=100)
+    citizen_phone: Optional[str] = Field(None, max_length=20)
+    citizen_email: Optional[str] = Field(None, max_length=100)
+    anonymous: bool = False
+
+class ComplaintResponse(BaseModel):
+    tracking_id: str
+    status: str
+    category: str
+    summary: str
+    urgency_score: int
+    urgency_reasons: List[str]
+    department: str
+    created_at: datetime
+    estimated_resolution: Optional[datetime] = None
+
+class StatusUpdateRequest(BaseModel):
+    status: ComplaintStatus
+    notes: Optional[str] = Field(None, max_length=500)
+
+# Database session dependency
+def get_session():
+    with Session(engine) as session:
+        yield session
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Application lifespan manager for startup and shutdown tasks"""
+    
+    # Startup tasks
+    print("🚀 Starting CivicFix AI...")
+    
+    # Run complete database initialization
+    await run_database_initialization(engine, "data")
+    
+    # Check initialization status
+    init_status = is_database_initialized(engine)
+    print("📊 Database initialization status:", init_status)
+    
+    # Show database statistics
+    db_stats = get_database_stats(engine)
+    print("📈 Database contents:", db_stats)
+    
+    # Initialize RAG service (will be implemented in later tasks)
+    # await index_documents_if_needed(DATABASE_URL, "data/")
+    print("📚 RAG service initialization deferred to later tasks")
+    
+    # Start SLA monitoring scheduler (will be enabled in later tasks)
+    # scheduler.add_job(
+    #     check_sla_breaches,
+    #     IntervalTrigger(minutes=15),
+    #     id="sla_monitor",
+    #     name="SLA Breach Monitor"
+    # )
+    # scheduler.start()
+    print("⏰ SLA monitoring scheduler deferred to later tasks")
+    
+    print("✅ CivicFix AI startup complete")
+    
+    yield
+    
+    # Shutdown tasks
+    print("🛑 Shutting down CivicFix AI...")
+    # scheduler.shutdown()
+    print("⏰ Scheduler stopped")
+
+
+app = FastAPI(
+    title="CivicFix AI",
+    description="AI-powered municipal complaint platform with voice-first interaction",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Configure appropriately for production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Add rate limiting middleware (will be enabled in later tasks)
+# app.state.limiter = limiter
+# app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+# app.add_middleware(SlowAPIMiddleware)
+
+
+# Placeholder for SLA monitoring function
+async def check_sla_breaches():
+    """Background task to check for SLA breaches and trigger escalations"""
+    print(f"🔍 Checking SLA breaches at {datetime.now()}")
+    # Implementation will be added in later tasks
+
+
+# Basic health check endpoint
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {"status": "healthy", "timestamp": datetime.now()}
+
+
+# Database status endpoint
+@app.get("/admin/database-status")
+async def database_status():
+    """Check database initialization status and statistics"""
+    try:
+        init_status = is_database_initialized(engine)
+        db_stats = get_database_stats(engine)
+        
+        return {
+            "status": "success",
+            "initialization": init_status,
+            "statistics": db_stats,
+            "timestamp": datetime.now()
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e),
+            "timestamp": datetime.now()
+        }
+
+
+# Placeholder endpoints (will be implemented in subsequent tasks)
+
+@app.post("/chat")
+# @limiter.limit("30/minute")  # Will be enabled in later tasks
+async def chat_endpoint(request: Request):
+    """Main chat endpoint for complaint submission"""
+    # Will be implemented in later tasks
+    return {"message": "Chat endpoint - to be implemented"}
+
+
+@app.post("/transcribe")
+# @limiter.limit("30/minute")  # Will be enabled in later tasks
+async def transcribe_endpoint(request: Request, audio: UploadFile = File(...)):
+    """Audio transcription endpoint"""
+    # Will be implemented in later tasks
+    return {"message": "Transcribe endpoint - to be implemented"}
+
+
+@app.post("/complaints/submit")
+# @limiter.limit("30/minute")  # Will be enabled in later tasks
+async def submit_complaint(request: Request):
+    """Direct complaint submission endpoint"""
+    # Will be implemented in later tasks
+    return {"message": "Submit complaint endpoint - to be implemented"}
+
+
+@app.get("/complaints/{tracking_id}")
+async def get_complaint(tracking_id: str):
+    """Get complaint by tracking ID"""
+    # Will be implemented in later tasks
+    return {"message": "Get complaint endpoint - to be implemented"}
+
+
+@app.patch("/complaints/{complaint_id}/status")
+async def update_complaint_status(complaint_id: int):
+    """Update complaint status"""
+    # Will be implemented in later tasks
+    return {"message": "Update status endpoint - to be implemented"}
+
+
+@app.get("/officer/complaints")
+async def get_officer_complaints(request: Request):
+    """Officer complaint queue endpoint"""
+    # Will be implemented in later tasks
+    return {"message": "Officer complaints endpoint - to be implemented"}
+
+
+@app.get("/admin/heatmap")
+async def get_admin_heatmap():
+    """Admin heatmap data endpoint"""
+    # Will be implemented in later tasks
+    return {"message": "Admin heatmap endpoint - to be implemented"}
+
+
+@app.get("/admin/stats")
+async def get_admin_stats():
+    """Admin statistics endpoint"""
+    # Will be implemented in later tasks
+    return {"message": "Admin stats endpoint - to be implemented"}
+
+
+@app.get("/admin/complaints")
+async def get_admin_complaints():
+    """Admin complaints endpoint with filtering"""
+    # Will be implemented in later tasks
+    return {"message": "Admin complaints endpoint - to be implemented"}
+
+
+@app.get("/review-queue")
+async def get_review_queue():
+    """Human review queue endpoint"""
+    # Will be implemented in later tasks
+    return {"message": "Review queue endpoint - to be implemented"}
+
+
+@app.post("/review/{complaint_id}/approve")
+async def approve_review(complaint_id: int):
+    """Approve reviewed complaint endpoint"""
+    # Will be implemented in later tasks
+    return {"message": "Approve review endpoint - to be implemented"}
+
+
+@app.post("/simulate")
+async def simulate_complaint():
+    """Simulation endpoint for testing"""
+    # Will be implemented in later tasks
+    return {"message": "Simulate endpoint - to be implemented"}
+
+
+@app.post("/ask-regulations")
+async def ask_regulations():
+    """RAG-powered regulation query endpoint"""
+    # Will be implemented in later tasks
+    return {"message": "Ask regulations endpoint - to be implemented"}
+
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "app.main:app", 
+        host="0.0.0.0", 
+        port=8000, 
+        reload=True
+    )

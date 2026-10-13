@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 98%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 98%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 217.2 91.2% 59.8%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Professional Government Styling */
+@layer components {
+  .bg-grid-slate-100 {
+    background-image: 
+      linear-gradient(to right, rgb(241 245 249 / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(241 245 249 / 0.5) 1px, transparent 1px);
+  }
+  
+  .professional-card {
+    @apply bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-all duration-200;
+  }
+  
+  .professional-button {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg;
+  }
+  
+  .professional-input {
+    @apply px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+  }
+  
+  .stat-card {
+    @apply bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow;
+  }
+  
+  .gradient-icon {
+    @apply w-12 h-12 rounded-lg flex items-center justify-center;
+  }
+}
+
+/* Voice Animation Improvements */
+@layer components {
+  .voice-pulse {
+    animation: voice-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes voice-pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+  
+  .listening-indicator {
+    position: relative;
+  }
+  
+  .listening-indicator::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #0d7377, #14b8a6);
+    opacity: 0.3;
+    animation: listening-pulse 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes listening-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.1;
+    }
+  }
+
+  @keyframes soundwave {
+    0%, 100% { height: 6px; }
+    50% { height: 20px; }
+  }
+  .soundwave-bar-1 { animation: soundwave 0.8s ease-in-out infinite 0.1s; }
+  .soundwave-bar-2 { animation: soundwave 0.8s ease-in-out infinite 0.3s; }
+  .soundwave-bar-3 { animation: soundwave 0.8s ease-in-out infinite 0.2s; }
+  .soundwave-bar-4 { animation: soundwave 0.8s ease-in-out infinite 0.4s; }
+}
+
+/* Emergency Alert Styling */
+@layer components {
+  .emergency-alert {
+    @apply bg-gradient-to-r from-red-600 to-rose-600 text-white rounded-xl shadow-lg border border-red-700;
+    animation: emergency-shake 0.5s ease-in-out 3;
+  }
+  
+  @keyframes emergency-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+}
+
+/* Professional Typography */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-slate-900 font-semibold tracking-tight;
+  }
+  
+  .text-body {
+    @apply text-slate-600 leading-relaxed;
+  }
+  
+  .text-caption {
+    @apply text-slate-500 text-sm;
+  }
+}
+
+/* Status Indicators */
+@layer components {
+  .status-pending {
+    @apply bg-amber-100 text-amber-800 border-amber-200;
+  }
+  
+  .status-in-progress {
+    @apply bg-blue-100 text-blue-800 border-blue-200;
+  }
+  
+  .status-resolved {
+    @apply bg-green-100 text-green-800 border-green-200;
+  }
+  
+  .status-emergency {
+    @apply bg-red-100 text-red-800 border-red-200;
+  }
+}
+
+/* Accessibility Improvements */
+@layer base {
+  *:focus {
+    @apply outline-none;
+  }
+  
+  .focus-visible\:ring-2:focus-visible {
+    @apply ring-2 ring-blue-500 ring-offset-2;
+  }
+}
+
+/* RTL Support for Urdu */
+[dir="rtl"] {
+  .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 1;
+  }
+  
+  .divide-x-reverse > :not([hidden]) ~ :not([hidden]) {
+    --tw-divide-x-reverse: 1;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-break {
+    page-break-after: always;
+  }
+}
