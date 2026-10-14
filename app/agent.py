@@ -126,72 +126,101 @@ class AgentClient:
         return response
     
     async def _extract_with_litellm(self, system_prompt: str, user_prompt: str) -> ComplaintExtraction:
-        """Fallback extraction using LiteLLM"""
+        """Fallback extraction using Gemini 1.5 Flash via LiteLLM or direct Google GenerativeAI"""
+        google_key = os.getenv("GOOGLE_API_KEY")
+        
+        # 1. Try Gemini 1.5 Flash via LiteLLM if available
         try:
             import litellm
+            model_name = "gemini/gemini-1.5-flash" if google_key else "gpt-3.5-turbo"
+            extra_kwargs = {"api_key": google_key} if google_key else {}
             
             response = await litellm.acompletion(
-                model="gpt-3.5-turbo",  # Fallback model
+                model=model_name,
                 messages=[
-                    {"role": "system", "content": system_prompt},
+                    {"role": "system", "content": system_prompt + "\nReturn ONLY valid JSON matching ComplaintExtraction schema."},
                     {"role": "user", "content": user_prompt}
                 ],
                 max_tokens=1000,
                 temperature=0.1,
-                timeout=10.0
+                timeout=12.0,
+                **extra_kwargs
             )
             
-            # Parse response manually since LiteLLM doesn't have Instructor integration
             content = response.choices[0].message.content
-            
-            # For now, return a basic extraction that will trigger human review
-            # In a full implementation, you'd parse the LLM response manually
-            return ComplaintExtraction(
-                category=ComplaintCategory.OTHER,
-                summary="Complaint processed via fallback service",
-                sentiment="neutral", 
-                vulnerable_group_flag=False,
-                missing_field="description",
-                confidence=0.5
-            )
-            
-        except ImportError:
-            raise Exception("LiteLLM not available for fallback")
-        except Exception as e:
-            raise Exception(f"LiteLLM extraction failed: {e}")
+            if content:
+                import json
+                cleaned = content.strip().replace("```json", "").replace("```", "").strip()
+                data = json.loads(cleaned)
+                return ComplaintExtraction(**data)
+        except Exception as litellm_err:
+            logger.warning(f"LiteLLM Gemini fallback failed: {litellm_err}, attempting direct Gemini client")
+
+        # 2. Try direct Google Gemini GenerativeModel fallback
+        if google_key:
+            try:
+                import google.generativeai as genai
+                import json
+                genai.configure(api_key=google_key)
+                model = genai.GenerativeModel("gemini-1.5-flash")
+                prompt_full = f"{system_prompt}\n\n{user_prompt}\n\nIMPORTANT: Respond ONLY with valid JSON with keys: category, summary, sentiment, vulnerable_group_flag, missing_field, confidence."
+                gemini_resp = await asyncio.to_thread(model.generate_content, prompt_full)
+                if gemini_resp and gemini_resp.text:
+                    cleaned = gemini_resp.text.strip().replace("```json", "").replace("```", "").strip()
+                    data = json.loads(cleaned)
+                    return ComplaintExtraction(**data)
+            except Exception as direct_gemini_err:
+                logger.error(f"Direct Gemini fallback error: {direct_gemini_err}")
+
+        # 3. Safe fallback triggering human review
+        return ComplaintExtraction(
+            category=ComplaintCategory.OTHER,
+            summary="Complaint processed via fallback service (queued for review)",
+            sentiment="neutral", 
+            vulnerable_group_flag=False,
+            missing_field="description",
+            confidence=0.4
+        )
     
     def _build_system_prompt(self) -> str:
-        """Build the system prompt for complaint extraction"""
+        """Build the system prompt for complaint extraction with bilingual Urdu/English few-shot learning"""
         categories = ", ".join([cat.value for cat in ComplaintCategory])
         
-        return f"""You are an AI assistant for CivicFix, a municipal complaint system. Your job is to extract structured information from citizen complaints.
+        return f"""You are an expert bilingual AI assistant for CivicFix, an intelligent municipal complaint triage platform. Your job is to extract structured information from citizen complaints in English, Urdu (Nastaliq script), and Roman Urdu (Urdu in English alphabet).
 
 COMPLAINT CATEGORIES:
 {categories}
 
 INSTRUCTIONS:
-1. Extract the complaint category from the provided list that best matches the issue
-2. Create a concise one-sentence summary (max 150 characters)
-3. Determine sentiment: positive, neutral, or negative
-4. Check if vulnerable groups are mentioned (elderly, children, disabled, pregnant women, etc.)
-5. Identify if any critical field is missing: category, location, or description
-6. Provide a confidence score (0.0-1.0) for your extraction quality
+1. Extract the complaint category from the provided list that best matches the issue.
+2. Create a concise one-sentence English summary (max 150 characters) clearly summarizing the problem.
+3. Determine sentiment: positive, neutral, or negative.
+4. Check if vulnerable groups are mentioned (elderly, children, disabled, pregnant women, hospital patients, school students).
+5. Identify if any critical field is missing: category, location, or description.
+6. Provide an objective confidence score (0.0-1.0) for your extraction quality.
+
+MULTILINGUAL URDU FEW-SHOT EXAMPLES:
+- Roman Urdu: "Hamaray mohallay G-9/2 main ganda nala toot gaya hai aur kachra sadak par phel gaya hai, school k bachay guzar nahi saktay"
+  -> category: "drainage", summary: "Overflowing sewer and waste blocking street in G-9/2 near school", vulnerable_group_flag: true, missing_field: null, confidence: 0.95
+
+- Nastaliq Urdu: "مین روڈ پر گہرا کھڈا ہے جس سے گاڑیاں حادثے کا شکار ہو رہی ہیں، فوری مرمت کروائیں"
+  -> category: "roads", summary: "Hazardous deep pothole on main road causing vehicle accidents", vulnerable_group_flag: false, missing_field: "location", confidence: 0.85
+
+- Roman Urdu: "Bijli ka khamba jhuk gaya hai aur nangi taarein latak rahi hain barish main aag lag sakti hai"
+  -> category: "electricity", summary: "Leaning electricity pole with hazardous live exposed wires", vulnerable_group_flag: false, missing_field: "location", confidence: 0.90
 
 MISSING FIELDS LOGIC:
-- category: Cannot determine what type of complaint this is from the categories above
-- location: No specific location, area, street name, or landmarks mentioned
-- description: Complaint is too vague or unclear about the actual problem
+- category: Cannot determine what type of municipal issue this is from the categories above.
+- location: No specific location, street name, sector, or nearby landmark mentioned in message or context.
+- description: Complaint is too vague (e.g., "help", "problem here") to describe what is broken.
 
 CONFIDENCE SCORING:
-- 0.9-1.0: Very clear complaint with all details
-- 0.7-0.9: Good complaint with minor ambiguity
-- 0.5-0.7: Adequate complaint but needs clarification
-- 0.3-0.5: Poor complaint with significant ambiguity
-- 0.0-0.3: Very unclear complaint requiring human review
+- 0.9-1.0: Very clear complaint with problem and location.
+- 0.7-0.9: Good complaint with minor ambiguity or implied location.
+- 0.5-0.7: Adequate complaint but missing location or specific detail.
+- 0.0-0.4: Vague or unclear complaint requiring human review.
 
-Be accurate and conservative with confidence scores. If you're unsure, use lower confidence.
-
-Respond ONLY with the structured JSON format. Do not include any additional text or explanation."""
+Respond ONLY with the structured JSON format."""
 
     def _build_user_prompt(self, message: str, context: Optional[dict] = None) -> str:
         """Build the user prompt with message and optional context"""

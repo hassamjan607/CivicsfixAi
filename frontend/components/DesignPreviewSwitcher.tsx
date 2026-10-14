@@ -34,12 +34,14 @@ export default function DesignPreviewSwitcher() {
     <div className="min-h-screen bg-slate-100/90 flex flex-col font-sans">
       {/* Top Unified Role Switcher & Screen Navigation Bar - Light Theme */}
       <header className="bg-white/95 backdrop-blur-md text-slate-900 px-3 sm:px-6 py-3 border-b border-slate-200 shadow-xs sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+        <div className="max-w-[1400px] w-full mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           {/* Brand + Specification Label */}
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#0D5C63] flex items-center justify-center text-white font-bold text-xs shadow-xs ring-2 ring-teal-100">
-              CF
-            </div>
+            <img
+              src="/logo.jpg"
+              alt="CivicFix AI Logo"
+              className="w-8 h-8 rounded-lg object-cover ring-2 ring-teal-100 shadow-xs"
+            />
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-sm sm:text-base tracking-tight text-slate-900">
@@ -136,9 +138,9 @@ export default function DesignPreviewSwitcher() {
         </div>
       </header>
 
-      {/* Screen Presentation Container - Automatically adapts to screen size */}
+      {/* Screen Presentation Container - Automatically adapts to screen size (max 1400px) */}
       <main className="flex-1 w-full p-2 sm:p-4 md:p-6 lg:p-8 overflow-y-auto flex items-start justify-center">
-        <div className={`w-full ${role === "admin" || role === "simulator" ? "max-w-7xl" : "max-w-6xl"} mx-auto transition-all duration-300`}>
+        <div className="w-full max-w-[1400px] mx-auto transition-all duration-300">
           {/* Citizen Role Views */}
           {role === "citizen" && citizenScreen === "submission" && (
             <CitizenSubmissionScreen

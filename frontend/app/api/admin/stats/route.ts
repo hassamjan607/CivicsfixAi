@@ -43,13 +43,23 @@ export async function GET() {
       },
     });
 
+    const totalUsers = await db.user.count();
+    const reopenedComplaints = await db.complaint.count({ where: { status: "REOPENED" } });
+
     return NextResponse.json({
       stats: {
         total: totalComplaints,
+        totalComplaints: totalComplaints,
         resolved: resolvedComplaints,
+        resolvedComplaints: resolvedComplaints,
         pending: pendingComplaints,
+        pendingComplaints: pendingComplaints,
         escalated: escalatedComplaints,
         overdue: overdueComplaints,
+        overdueComplaints: overdueComplaints,
+        reopenedComplaints: reopenedComplaints,
+        departmentsCount: complaintsByDepartment.length,
+        usersCount: totalUsers,
         slaComplianceRate: totalComplaints > 0 ? Math.round(((totalComplaints - overdueComplaints) / totalComplaints) * 100) : 100,
         reopenRate: Math.round(reopenRate * 10) / 10,
         byCategory: complaintsByCategory.map((c: any) => ({ category: c.category, count: c._count.id })),

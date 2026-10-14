@@ -167,45 +167,21 @@ export default function DemoToolsMenu() {
               </div>
             </div>
 
-            {/* Showcase Demo Tickets */}
+            {/* Public Complaint Tracker */}
             <div className="space-y-1.5 pt-2 border-t border-slate-100">
               <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">
-                Showcase Complaints
+                Public Complaint Tracker
               </span>
-              <div className="space-y-1">
-                <a
-                  href="/track/CF-1042"
-                  className="flex items-center justify-between p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-xs transition-all"
-                >
-                  <div>
-                    <span className="font-mono font-bold text-teal-700">CF-1042</span>
-                    <span className="text-slate-500 ml-2">Awaiting Citizen Confirmation</span>
-                  </div>
-                  <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
-                </a>
-
-                <a
-                  href="/track/CF-1055"
-                  className="flex items-center justify-between p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-xs transition-all"
-                >
-                  <div>
-                    <span className="font-mono font-bold text-amber-700">CF-1055</span>
-                    <span className="text-slate-500 ml-2">Reopened Complaint</span>
-                  </div>
-                  <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
-                </a>
-
-                <a
-                  href="/track/CF-1018"
-                  className="flex items-center justify-between p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-xs transition-all"
-                >
-                  <div>
-                    <span className="font-mono font-bold text-rose-700">CF-1018</span>
-                    <span className="text-slate-500 ml-2">SLA Overdue / Escalated</span>
-                  </div>
-                  <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
-                </a>
-              </div>
+              <a
+                href="/track"
+                className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50 border border-slate-200 hover:border-teal-200 text-xs transition-all group"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-mono font-bold text-[#0D7377]">/track</span>
+                  <span className="text-slate-600 font-medium">Public Status & Proof Viewer</span>
+                </div>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0D7377]" />
+              </a>
             </div>
 
             {/* Run Background Cron / Escalations */}

@@ -35,15 +35,52 @@ export default function CitizenReportPage() {
       setSubmittedComplaint(resData.complaint);
     } catch (err: any) {
       console.error("Submission failed:", err);
-      // Fallback display if server had issues
+      // Fallback display if server had issues, calculating dynamic explainable score
+      const cat = data.category || "General Civic Issue";
+      const descLower = (data.description || "").toLowerCase();
+      
+      let baseUrgency = 4;
+      if (cat.includes("Sewage")) baseUrgency = 5;
+      else if (cat.includes("Water")) baseUrgency = 5;
+      else if (cat.includes("Road") || cat.includes("Pothole")) baseUrgency = 4;
+      else if (cat.includes("Streetlight") || cat.includes("Light")) baseUrgency = 3;
+
+      const isEmerg = /wire|taar|spark|current|short circuit|blast|dhamaka|کرنٹ|تار/.test(descLower);
+      const isSensitive = /hospital|clinic|school|college|masjid|ہسپتال|اسکول|مدرسہ/.test(descLower);
+      const isRain = /rain|barish|monsoon|flood|بارش|سیلاب/.test(descLower);
+      const isSevere = /burst|massive|huge|deep|overflow|crater|danger|خطرناک|بڑا/.test(descLower);
+
+      let calcUrgency = isEmerg ? 10 : baseUrgency;
+      const reasons: string[] = [`Base severity for ${cat}: ${baseUrgency}/10`];
+
+      if (isEmerg) {
+        reasons.unshift("Emergency override: Live wire or immediate public hazard detected");
+      } else {
+        if (isSevere) {
+          calcUrgency += 1;
+          reasons.push("Damage intensity: Severe structural defect or overflow reported (+1)");
+        }
+        if (isSensitive) {
+          calcUrgency += 2;
+          reasons.push("Proximity bonus: Health or educational facility nearby (+2)");
+        }
+        if (isRain) {
+          calcUrgency += 1;
+          reasons.push("Weather alert: Precipitation / monsoon flood risk (+1)");
+        }
+      }
+      calcUrgency = Math.min(10, Math.max(1, calcUrgency));
+
+      const isTepa = ["Roads", "Potholes", "Streetlights"].includes(cat);
+
       setSubmittedComplaint({
-        trackingId: "CF-1099",
-        category: data.category || "Sewage",
-        summary: data.description?.slice(0, 80) || "Municipal Hazard",
+        trackingId: `CF-${Math.floor(1000 + Math.random() * 9000)}`,
+        category: cat,
+        summary: data.description?.slice(0, 80) || `${cat} Issue`,
         address: data.location || "Street 4, Lahore Central",
-        urgency: 8,
-        reasons: ["Open hazard requiring urgent municipal attention", "High population density"],
-        departmentName: "Water & Sanitation (WASA)",
+        urgency: calcUrgency,
+        reasons,
+        departmentName: isTepa ? "Traffic & Transport Planning (TEPA)" : "Water & Sanitation Agency (WASA)",
         status: "SUBMITTED",
       });
     }
@@ -51,7 +88,7 @@ export default function CitizenReportPage() {
 
   if (submittedComplaint) {
     return (
-      <div className="w-full max-w-5xl mx-auto py-4">
+      <div className="w-full max-w-[1400px] mx-auto py-4">
         <ComplaintReceivedScreen
           complaintData={submittedComplaint}
           trackingId={submittedComplaint.trackingId}
@@ -64,7 +101,7 @@ export default function CitizenReportPage() {
   }
 
   return (
-    <div className="w-full max-w-5xl mx-auto py-2">
+    <div className="w-full max-w-[1400px] mx-auto py-2">
       <CitizenSubmissionScreen
         onNavigateToReceived={(data) => handleComplaintSubmit(data)}
         isWideView={true}

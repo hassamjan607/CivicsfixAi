@@ -60,9 +60,11 @@ export default function AdminLayout({
       <aside className="w-64 bg-[#0B1E36] text-white flex-col justify-between hidden md:flex shrink-0">
         <div>
           <div className="p-6 border-b border-slate-800 flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-2xl bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center font-black text-sm">
-              CF
-            </div>
+            <img
+              src="/logo.jpg"
+              alt="CivicFix AI Logo"
+              className="w-9 h-9 rounded-xl object-cover border border-teal-500/30 shadow-md"
+            />
             <div>
               <span className="font-extrabold text-base tracking-tight text-white block leading-tight">
                 CivicFix AI
@@ -162,8 +164,8 @@ export default function AdminLayout({
           </div>
         </header>
 
-        {/* Content Area */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto pb-16">
+        {/* Content Area (Responsive layout max 1400px) */}
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1400px] w-full mx-auto pb-16">
           {children}
         </main>
       </div>

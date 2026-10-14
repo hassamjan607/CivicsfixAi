@@ -16,7 +16,7 @@ export async function GET() {
       orderBy: { name: "asc" },
     });
 
-    const parsed = departments.map((d) => ({
+    const parsed = departments.map((d: any) => ({
       id: d.id,
       name: d.name,
       code: d.code,

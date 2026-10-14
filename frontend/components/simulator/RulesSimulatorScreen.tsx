@@ -305,8 +305,8 @@ export default function RulesSimulatorScreen() {
         </div>
       </header>
 
-      {/* Main Container */}
-      <div className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+      {/* Main Container (Responsive layout max 1400px) */}
+      <div className="flex-1 max-w-[1400px] w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
         {activeTab === "simulator" ? (
           <>
             {/* Preset Scenarios Selector */}
@@ -619,12 +619,23 @@ export default function RulesSimulatorScreen() {
                       Explainable Score Reasons (Audit Proof):
                     </span>
                     <ul className="space-y-1.5">
-                      {result.reasons.map((reason, idx) => (
-                        <li key={idx} className="text-xs text-slate-700 flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200 shadow-xs font-medium">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 shrink-0 mt-0.5" />
-                          <span>{reason}</span>
-                        </li>
-                      ))}
+                      {result.reasons.map((reason: any, idx) => {
+                        const title = typeof reason === "string" ? reason : reason?.title || "";
+                        const points = typeof reason === "object" ? reason?.points : null;
+                        return (
+                          <li key={idx} className="text-xs text-slate-700 flex items-start justify-between gap-2 bg-white p-2 rounded-lg border border-slate-200 shadow-xs font-medium">
+                            <div className="flex items-start gap-2 min-w-0">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 shrink-0 mt-0.5" />
+                              <span>{title}</span>
+                            </div>
+                            {points && (
+                              <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 shrink-0 font-mono">
+                                {points}
+                              </span>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 </div>

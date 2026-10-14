@@ -19,6 +19,16 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
     sys.stderr.reconfigure(encoding="utf-8")
 
+# Ensure parent and current directories are in sys.path
+_current_dir = os.path.dirname(os.path.abspath(__file__))
+_parent_dir = os.path.dirname(_current_dir)
+for _p in [_parent_dir, _current_dir]:
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
+if __package__ is None or __package__ == "":
+    __package__ = "app"
+
 import uvicorn
 from fastapi import FastAPI, HTTPException, Request, UploadFile, File, Form, BackgroundTasks, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -26,24 +36,43 @@ from fastapi.responses import JSONResponse
 from sqlmodel import Session, SQLModel, create_engine, select
 from pydantic import BaseModel, Field
 
-# Import our modules
-from .models import (
-    Department, Complaint, Asset, StatusEvent, ImageHash, 
-    TrackingIDGenerator
-)
-from .config import (
-    ComplaintCategory, ComplaintStatus, PhotoType,
-    CATEGORY_TO_DEPARTMENT, SLA_HOURS, EMERGENCY_KEYWORDS,
-    ROOT_CAUSE_THRESHOLD, CONFIDENCE_THRESHOLD, DEFAULT_BASE_SEVERITY
-)
-from .database import run_database_initialization, is_database_initialized, get_database_stats
-from .seed_demo import seed_demo_complaints
-from .agent import process_chat_message, get_agent_client, should_trigger_human_review
-from .rules import compute_urgency
-from .context import get_context_data
-from .vision import analyze_photo, validate_image, blur_privacy_info, get_base_severity_score
-from .notify import send_complaint_notification, send_status_update_notification, send_escalation_notification
-from .dedup import find_duplicate_complaint, check_duplicate_image_across_complaints, create_image_hash, haversine_meters
+# Import our modules with support for both script and package execution
+try:
+    from .models import (
+        Department, Complaint, Asset, StatusEvent, ImageHash, 
+        TrackingIDGenerator
+    )
+    from .config import (
+        ComplaintCategory, ComplaintStatus, PhotoType,
+        CATEGORY_TO_DEPARTMENT, SLA_HOURS, EMERGENCY_KEYWORDS,
+        ROOT_CAUSE_THRESHOLD, CONFIDENCE_THRESHOLD, DEFAULT_BASE_SEVERITY
+    )
+    from .database import run_database_initialization, is_database_initialized, get_database_stats
+    from .seed_demo import seed_demo_complaints
+    from .agent import process_chat_message, get_agent_client, should_trigger_human_review
+    from .rules import compute_urgency
+    from .context import get_context_data
+    from .vision import analyze_photo, validate_image, blur_privacy_info, get_base_severity_score
+    from .notify import send_complaint_notification, send_status_update_notification, send_escalation_notification
+    from .dedup import find_duplicate_complaint, check_duplicate_image_across_complaints, create_image_hash, haversine_meters
+except (ImportError, ValueError):
+    from app.models import (
+        Department, Complaint, Asset, StatusEvent, ImageHash, 
+        TrackingIDGenerator
+    )
+    from app.config import (
+        ComplaintCategory, ComplaintStatus, PhotoType,
+        CATEGORY_TO_DEPARTMENT, SLA_HOURS, EMERGENCY_KEYWORDS,
+        ROOT_CAUSE_THRESHOLD, CONFIDENCE_THRESHOLD, DEFAULT_BASE_SEVERITY
+    )
+    from app.database import run_database_initialization, is_database_initialized, get_database_stats
+    from app.seed_demo import seed_demo_complaints
+    from app.agent import process_chat_message, get_agent_client, should_trigger_human_review
+    from app.rules import compute_urgency
+    from app.context import get_context_data
+    from app.vision import analyze_photo, validate_image, blur_privacy_info, get_base_severity_score
+    from app.notify import send_complaint_notification, send_status_update_notification, send_escalation_notification
+    from app.dedup import find_duplicate_complaint, check_duplicate_image_across_complaints, create_image_hash, haversine_meters
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)

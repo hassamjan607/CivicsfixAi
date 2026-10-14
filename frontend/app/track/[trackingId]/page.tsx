@@ -207,7 +207,7 @@ export default function TrackingDetailPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       {/* Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link
             href="/track"
             className="text-xs font-bold text-[#0D7377] hover:text-[#095256] flex items-center gap-1.5 transition-colors"
@@ -224,7 +224,7 @@ export default function TrackingDetailPage() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+      <main className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Action success notification */}
         {actionSuccess && (
           <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
@@ -396,17 +396,28 @@ export default function TrackingDetailPage() {
                   Scoring Factors
                 </span>
                 <div className="space-y-2">
-                  {complaint.reasons?.map((reason, idx) => (
-                    <div
-                      key={idx}
-                      className="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-700 flex items-start gap-2"
-                    >
-                      <span className="w-4 h-4 rounded-full bg-teal-100 text-[#0D7377] font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
-                        ✓
-                      </span>
-                      <span className="leading-snug">{reason}</span>
-                    </div>
-                  ))}
+                  {complaint.reasons?.map((reason: any, idx) => {
+                    const title = typeof reason === "string" ? reason : reason?.title || "";
+                    const points = typeof reason === "object" ? reason?.points : null;
+                    return (
+                      <div
+                        key={idx}
+                        className="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-700 flex items-start justify-between gap-2"
+                      >
+                        <div className="flex items-start gap-2 min-w-0">
+                          <span className="w-4 h-4 rounded-full bg-teal-100 text-[#0D7377] font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
+                            ✓
+                          </span>
+                          <span className="leading-snug">{title}</span>
+                        </div>
+                        {points && (
+                          <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 shrink-0 font-mono">
+                            {points}
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>

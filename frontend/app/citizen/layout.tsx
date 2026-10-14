@@ -83,17 +83,19 @@ export default function CitizenLayout({
     <div className={`min-h-screen bg-slate-100/70 text-slate-900 flex flex-col font-sans ${isRtl ? "rtl" : "ltr"}`}>
       {/* Top Header */}
       <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <Link href="/citizen" className="flex items-center space-x-2.5">
-              <div className="w-9 h-9 rounded-2xl bg-[#0B1E36] flex items-center justify-center text-teal-400 font-extrabold text-sm shadow-md ring-2 ring-teal-500/20">
-                CF
-              </div>
+            <Link href="/citizen" className="flex items-center space-x-2.5 group">
+              <img
+                src="/logo.jpg"
+                alt="CivicFix AI Logo"
+                className="w-9 h-9 rounded-xl object-cover ring-2 ring-teal-500/20 shadow-md group-hover:scale-105 transition-transform"
+              />
               <div>
                 <span className="font-black text-base tracking-tight text-slate-900 block leading-tight">
                   CivicFix AI
                 </span>
-                <span className="text-[10px] bg-teal-50 text-[#0D7377] font-bold px-1.5 py-0.2 rounded border border-teal-200">
+                <span className="text-xs bg-teal-50 text-[#0D7377] font-bold px-2 py-0.5 rounded-md border border-teal-200">
                   Citizen Portal
                 </span>
               </div>
@@ -101,7 +103,7 @@ export default function CitizenLayout({
           </div>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+          <nav className="hidden md:flex items-center space-x-1.5 lg:space-x-2.5">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href || (item.href !== "/citizen" && pathname.startsWith(item.href));
@@ -109,7 +111,7 @@ export default function CitizenLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 relative ${
+                  className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2 relative ${
                     item.highlight
                       ? "bg-[#0D7377] text-white hover:bg-[#095256] shadow-xs"
                       : isActive
@@ -117,10 +119,10 @@ export default function CitizenLayout({
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5" />
+                  <Icon className="w-4 h-4" />
                   <span>{item.label}</span>
                   {item.badge && item.badge > 0 ? (
-                    <span className="w-4 h-4 rounded-full bg-rose-600 text-white text-[9px] font-black flex items-center justify-center">
+                    <span className="w-4 h-4 rounded-full bg-rose-600 text-white text-[10px] font-black flex items-center justify-center">
                       {item.badge}
                     </span>
                   ) : null}
@@ -130,21 +132,21 @@ export default function CitizenLayout({
           </nav>
 
           {/* Right Header Controls: Language, Notifications Bell, User Menu */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3.5">
             {/* Language Switch */}
-            <div className="bg-slate-100 p-0.5 rounded-full border border-slate-200 flex items-center text-xs font-bold">
+            <div className="bg-slate-100 p-1 rounded-full border border-slate-200 flex items-center text-xs font-bold">
               <button
                 onClick={() => setLang("en")}
-                className={`px-2 py-0.5 rounded-full transition-all text-[11px] ${
-                  lang === "en" ? "bg-white text-slate-900 shadow-xs" : "text-slate-500"
+                className={`px-3 py-1 rounded-full transition-all text-xs ${
+                  lang === "en" ? "bg-white text-slate-900 shadow-xs font-extrabold" : "text-slate-500 hover:text-slate-800"
                 }`}
               >
                 EN
               </button>
               <button
                 onClick={() => setLang("ur")}
-                className={`px-2 py-0.5 rounded-full transition-all text-[11px] ${
-                  lang === "ur" ? "bg-white text-slate-900 shadow-xs" : "text-slate-500"
+                className={`px-3 py-1 rounded-full transition-all text-xs ${
+                  lang === "ur" ? "bg-white text-slate-900 shadow-xs font-extrabold" : "text-slate-500 hover:text-slate-800"
                 }`}
               >
                 اردو
@@ -167,18 +169,18 @@ export default function CitizenLayout({
             <div className="relative">
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 transition-all border border-transparent hover:border-slate-200"
+                className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-slate-100 transition-all border border-transparent hover:border-slate-200"
               >
-                <div className="w-8 h-8 rounded-full bg-[#0D7377] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                <div className="w-9 h-9 rounded-full bg-[#0D7377] text-white flex items-center justify-center font-bold text-sm shadow-xs">
                   {user?.name?.charAt(0) || "C"}
                 </div>
                 <div className="hidden sm:block text-left">
-                  <div className="text-xs font-bold text-slate-900 leading-tight">
+                  <div className="text-sm font-bold text-slate-900 leading-tight">
                     {user?.name || "Citizen"}
                   </div>
-                  <div className="text-[10px] text-slate-500">Public User</div>
+                  <div className="text-xs text-slate-500">Public User</div>
                 </div>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
+                <ChevronDown className="w-4 h-4 text-slate-400 hidden sm:block" />
               </button>
 
               {userMenuOpen && (
@@ -209,8 +211,8 @@ export default function CitizenLayout({
         </div>
       </header>
 
-      {/* Main Content Viewport (Full desktop width up to 1440px) */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 pb-24 md:pb-8">
+      {/* Main Content Viewport (Responsive layout max 1400px) */}
+      <main className="flex-1 max-w-[1400px] w-full mx-auto p-4 sm:p-6 lg:p-8 pb-24 md:pb-8">
         {children}
       </main>
 

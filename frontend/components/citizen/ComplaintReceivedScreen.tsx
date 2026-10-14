@@ -34,7 +34,7 @@ interface Props {
     description?: string;
     address?: string;
     urgency?: number;
-    reasons?: string[];
+    reasons?: Array<string | { points?: string; title?: string; detail?: string }>;
     departmentName?: string;
     department?: { name: string };
     slaDueAt?: string;
@@ -51,15 +51,16 @@ export default function ComplaintReceivedScreen({
   complaintData
 }: Props) {
   const effectiveTrackingId = complaintData?.trackingId || initialTrackingId;
-  const effectiveCategory = complaintData?.category || "Sewage";
-  const effectiveUrgency = complaintData?.urgency || 8;
-  const effectiveDept = complaintData?.departmentName || complaintData?.department?.name || "Water and Sanitation (WASA)";
-  const effectiveAddress = complaintData?.address || "Street 4, Lahore Central";
-  const effectiveReasons = complaintData?.reasons || [
-    "Severe open hazard requiring urgent containment",
-    "Heavy precipitation / rain risk elevates overflow spread",
-    "Proximity to high-density pedestrian thoroughfare"
-  ];
+  const effectiveCategory = complaintData?.category || "General Civic Issue";
+  const effectiveUrgency = typeof complaintData?.urgency === "number" ? complaintData.urgency : 5;
+  const effectiveDept = complaintData?.departmentName || complaintData?.department?.name || (["Roads", "Potholes", "Streetlights"].includes(effectiveCategory) ? "Traffic & Transport (TEPA)" : "Water and Sanitation (WASA)");
+  const effectiveAddress = complaintData?.address || "Street location, Lahore";
+  const effectiveReasons = complaintData?.reasons && complaintData.reasons.length > 0
+    ? complaintData.reasons
+    : [
+        { points: `+${effectiveUrgency}`, title: `Base severity evaluated for ${effectiveCategory}` },
+        { points: "AI Rules", title: "Municipal risk parameters assessed by CivicFix Triage Engine" }
+      ];
 
   const [copied, setCopied] = useState<boolean>(false);
   const [affectedCount, setAffectedCount] = useState<number>(2);
@@ -140,7 +141,7 @@ export default function ComplaintReceivedScreen({
   };
 
   return (
-    <div className="w-full mx-auto bg-slate-50 min-h-screen sm:min-h-[640px] flex flex-col justify-between shadow-xl relative font-sans text-slate-800 max-w-full lg:max-w-6xl sm:rounded-3xl border border-slate-200 overflow-hidden">
+    <div className="w-full mx-auto bg-slate-50 min-h-screen sm:min-h-[640px] flex flex-col justify-between shadow-xl relative font-sans text-slate-800 max-w-[1400px] sm:rounded-3xl border border-slate-200 overflow-hidden">
       {/* Top Header */}
       <header className="px-5 sm:px-6 pt-5 pb-3 flex items-center justify-between border-b border-slate-100 bg-white sticky top-0 z-20">
         <div className="flex items-center space-x-2.5">
@@ -312,17 +313,28 @@ export default function ComplaintReceivedScreen({
               </div>
 
               <div className="space-y-2.5">
-                {effectiveReasons.map((reason, idx) => (
-                  <div 
-                    key={idx}
-                    className="p-3 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-2.5 text-xs text-slate-700"
-                  >
-                    <span className="w-6 h-6 rounded-xl bg-teal-50 text-[#0D7377] font-black text-xs flex items-center justify-center shrink-0 border border-teal-200 mt-0.5">
-                      ✓
-                    </span>
-                    <span className="leading-relaxed font-medium">{reason}</span>
-                  </div>
-                ))}
+                {effectiveReasons.map((reason: any, idx) => {
+                  const title = typeof reason === "string" ? reason : reason?.title || "";
+                  const points = typeof reason === "object" ? reason?.points : null;
+                  return (
+                    <div 
+                      key={idx}
+                      className="p-3 rounded-2xl bg-slate-50 border border-slate-100 flex items-start justify-between gap-2.5 text-xs text-slate-700"
+                    >
+                      <div className="flex items-start gap-2.5 min-w-0">
+                        <span className="w-6 h-6 rounded-xl bg-teal-50 text-[#0D7377] font-black text-xs flex items-center justify-center shrink-0 border border-teal-200 mt-0.5">
+                          ✓
+                        </span>
+                        <span className="leading-relaxed font-medium">{title}</span>
+                      </div>
+                      {points && (
+                        <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 shrink-0 font-mono">
+                          {points}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 

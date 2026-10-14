@@ -52,9 +52,23 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+  html {
+    overflow-x: hidden;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  @media (min-width: 1536px) {
+    html {
+      font-size: 16px;
+    }
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 }
 
@@ -137,6 +151,141 @@
   .soundwave-bar-2 { animation: soundwave 0.8s ease-in-out infinite 0.3s; }
   .soundwave-bar-3 { animation: soundwave 0.8s ease-in-out infinite 0.2s; }
   .soundwave-bar-4 { animation: soundwave 0.8s ease-in-out infinite 0.4s; }
+}
+
+/* Animated Hero Background Gradients & Cursor Interactive Effects */
+@layer components {
+  .hero-animated-bg {
+    background: linear-gradient(
+      calc(125deg + (var(--mouse-pct-x, 0.5) - 0.5) * 45deg),
+      #071526 0%,
+      #0B1E36 20%,
+      #0e2a4d 38%,
+      #0f3b68 55%,
+      #0a4473 70%,
+      #0d2e52 85%,
+      #071526 100%
+    );
+    background-size: 240% 240%;
+    animation: heroBlueGradientShift 14s ease-in-out infinite;
+    transition: background-position 0.3s ease;
+  }
+
+  @keyframes heroBlueGradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Interactive Cursor Spotlight Glow - Reacts as mouse moves across */
+  .hero-cursor-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--mouse-active, 0);
+    transition: opacity 0.4s ease;
+    background: radial-gradient(
+      650px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(20, 255, 236, 0.16) 0%,
+      rgba(14, 116, 144, 0.12) 30%,
+      rgba(14, 56, 122, 0.08) 60%,
+      transparent 80%
+    );
+    mix-blend-mode: screen;
+  }
+
+  /* Tighter Inner Cursor Light Beam */
+  .hero-cursor-beam {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--mouse-active, 0);
+    transition: opacity 0.3s ease;
+    background: radial-gradient(
+      320px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(56, 189, 248, 0.18) 0%,
+      rgba(13, 115, 119, 0.1) 40%,
+      transparent 75%
+    );
+  }
+
+  .aurora-orb-1 {
+    animation: auroraFloat1 14s ease-in-out infinite alternate;
+  }
+
+  .aurora-orb-2 {
+    animation: auroraFloat2 10s ease-in-out infinite alternate;
+  }
+
+  .aurora-orb-3 {
+    animation: auroraFloat3 16s ease-in-out infinite alternate;
+  }
+
+  @keyframes auroraFloat1 {
+    0% {
+      transform: translate(-20%, -15%) scale(1);
+      opacity: 0.25;
+    }
+    50% {
+      transform: translate(25%, 20%) scale(1.2);
+      opacity: 0.45;
+    }
+    100% {
+      transform: translate(40%, -10%) scale(0.95);
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes auroraFloat2 {
+    0% {
+      transform: translate(35%, 15%) scale(1.1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translate(-15%, -25%) scale(0.9);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(-35%, 15%) scale(1.2);
+      opacity: 0.25;
+    }
+  }
+
+  @keyframes auroraFloat3 {
+    0% {
+      transform: translate(0%, 25%) scale(0.9);
+      opacity: 0.25;
+    }
+    50% {
+      transform: translate(-25%, -10%) scale(1.2);
+      opacity: 0.45;
+    }
+    100% {
+      transform: translate(20%, 15%) scale(1);
+      opacity: 0.25;
+    }
+  }
+
+  .text-gradient-flow {
+    background: linear-gradient(90deg, #14FFEC, #38bdf8, #60a5fa, #2dd4bf, #14FFEC);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: textGradientFlow 4s linear infinite;
+  }
+
+  @keyframes textGradientFlow {
+    to {
+      background-position: 200% center;
+    }
+  }
 }
 
 /* Emergency Alert Styling */

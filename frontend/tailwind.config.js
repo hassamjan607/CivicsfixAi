@@ -15,6 +15,9 @@ module.exports = {
       },
     },
     extend: {
+      maxWidth: {
+        'site': '1400px',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

@@ -10,7 +10,7 @@ export default function ReceivedPage() {
 
   return (
     <div className="min-h-screen bg-[#EEF2F6] flex flex-col items-center justify-center p-0 sm:p-4 md:p-6">
-      <div className="w-full max-w-6xl mb-3 px-4 hidden sm:flex items-center justify-between">
+      <div className="w-full max-w-[1400px] mb-3 px-4 hidden sm:flex items-center justify-between">
         <Link 
           href="/" 
           className="text-xs font-semibold text-[#0D5C63] hover:underline flex items-center gap-1"

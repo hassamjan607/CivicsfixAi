@@ -68,7 +68,7 @@ export default function OfficerLayout({
     <div className={`min-h-screen bg-slate-100/70 text-slate-900 flex flex-col font-sans ${isRtl ? "rtl" : "ltr"}`}>
       {/* Officer Top Header */}
       <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Link href="/officer" className="flex items-center space-x-2.5">
               <div className="w-9 h-9 rounded-2xl bg-[#0D7377] flex items-center justify-center text-white font-extrabold text-sm shadow-md">
@@ -171,8 +171,8 @@ export default function OfficerLayout({
         </div>
       </header>
 
-      {/* Main Content Viewport */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 pb-16">
+      {/* Main Content Viewport (Responsive layout max 1400px) */}
+      <main className="flex-1 max-w-[1400px] w-full mx-auto p-4 sm:p-6 lg:p-8 pb-16">
         {children}
       </main>
     </div>

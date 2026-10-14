@@ -9,6 +9,10 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'CivicFix AI - Municipal Grievance Redressal Platform',
   description: 'AI-powered municipal complaint triage platform with Urdu/English voice interaction, explainable urgency scoring, and verified resolution.',
+  icons: {
+    icon: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
 }
 
 export default function RootLayout({

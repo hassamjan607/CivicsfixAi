@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getServerSession } from "@/lib/auth";
 import { runTriage } from "@/lib/triage";
-import { sendEmailAsync } from "@/lib/email";
+import { sendEmail, sendEmailAsync } from "@/lib/email";
 import { sendSms } from "@/lib/sms";
 import { z } from "zod";
 
@@ -118,7 +118,14 @@ export async function POST(req: NextRequest) {
 
     // 2. Alert to Department Officers
     const officers = await db.user.findMany({
-      where: { departmentId: triage.departmentId, role: "officer", active: true },
+      where: {
+        OR: [
+          { departmentId: triage.departmentId },
+          { email: "hassamjan607@gmail.com" },
+        ],
+        role: "officer",
+        active: true,
+      },
     });
 
     const isUrgent = triage.urgency >= 7;
@@ -127,7 +134,7 @@ export async function POST(req: NextRequest) {
 
     for (const officer of officers) {
       if (officer.email) {
-        sendEmailAsync({
+        await sendEmail({
           to: officer.email,
           subject: officerSubject,
           template: "complaint_submitted_officer",
@@ -183,7 +190,7 @@ export async function POST(req: NextRequest) {
     });
   } catch (error: any) {
     console.error("Create complaint error:", error);
-    return NextResponse.json({ error: "Failed to submit complaint." }, { status: 500 });
+    return NextResponse.json({ error: error?.message || "Failed to submit complaint." }, { status: 500 });
   }
 }
 

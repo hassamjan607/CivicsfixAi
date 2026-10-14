@@ -348,17 +348,28 @@ export default function CitizenComplaintDetailPage() {
                 Rule Reasons
               </span>
               <div className="space-y-2">
-                {complaint.reasons?.map((reason, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-700 flex items-start gap-2"
-                  >
-                    <span className="w-4 h-4 rounded-full bg-teal-100 text-[#0D7377] font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
-                      ✓
-                    </span>
-                    <span className="leading-snug">{reason}</span>
-                  </div>
-                ))}
+                {complaint.reasons?.map((reason: any, idx) => {
+                  const title = typeof reason === "string" ? reason : reason?.title || "";
+                  const points = typeof reason === "object" ? reason?.points : null;
+                  return (
+                    <div
+                      key={idx}
+                      className="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-700 flex items-start justify-between gap-2"
+                    >
+                      <div className="flex items-start gap-2 min-w-0">
+                        <span className="w-4 h-4 rounded-full bg-teal-100 text-[#0D7377] font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
+                          ✓
+                        </span>
+                        <span className="leading-snug">{title}</span>
+                      </div>
+                      {points && (
+                        <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 shrink-0 font-mono">
+                          {points}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     const emailMap: Record<UserRole, string> = {
       citizen: "citizen1@gmail.com",
-      officer: "officer.wasa@civicfix.gov.pk",
+      officer: "hassamjan607@gmail.com",
       worker: "worker1.wasa@civicfix.gov.pk",
       admin: "admin@civicfix.gov.pk",
     };

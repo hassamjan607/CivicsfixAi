@@ -61,10 +61,12 @@ export default function RegisterPage() {
       <div className="w-full max-w-md space-y-6">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <Link href="/" className="inline-flex items-center space-x-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center font-black text-sm">
-              CF
-            </div>
+          <Link href="/" className="inline-flex items-center space-x-2.5 group">
+            <img
+              src="/logo.jpg"
+              alt="CivicFix AI Logo"
+              className="w-10 h-10 rounded-xl object-cover border border-teal-500/30 shadow-md group-hover:scale-105 transition-transform"
+            />
             <span className="text-2xl font-black text-white tracking-tight">
               CivicFix AI
             </span>

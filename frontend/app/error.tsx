@@ -21,6 +21,11 @@ export default function ErrorPage({
         <p className="text-xs text-slate-600 leading-relaxed">
           An unexpected error occurred while processing this request. Our technical staff has been logged.
         </p>
+        {error?.message && (
+          <div className="text-left text-xs bg-red-50 text-red-700 p-3 rounded-xl border border-red-200 overflow-auto max-h-40 font-mono">
+            {error.message}
+          </div>
+        )}
         <div className="pt-4 flex flex-col sm:flex-row gap-2 justify-center">
           <button
             onClick={() => reset()}
