@@ -59,8 +59,8 @@ async function main() {
   // Officers
   const wasaOfficer = await prisma.user.create({
     data: {
-      name: "Officer Tariq Mehmood",
-      email: "officer.wasa@civicfix.gov.pk",
+      name: "Hassam Jan",
+      email: "hassamjan607@gmail.com",
       phone: "0300-1112233",
       passwordHash,
       role: "officer",

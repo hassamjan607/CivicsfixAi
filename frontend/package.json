@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/prepare-db.js && prisma generate && next build",
+    "postinstall": "node scripts/prepare-db.js && prisma generate",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "seed": "node scripts/seed.js"
+    "seed": "node scripts/seed.js",
+    "db:push": "node scripts/prepare-db.js && prisma db push"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
